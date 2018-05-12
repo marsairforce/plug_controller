@@ -126,9 +126,18 @@ Then `P = (Tj - Ta) / Rth(j-a)`
 
 Or, with no heat sink, P = 2.1W . That feels wrong to me. But then further [reading](http://www.farnell.com/datasheets/1760777.pdf), yes it is regular to expect 2W heat dissipation for surface mount triacs.
 
+Remember too, that thermal requirements for the triac will be the power loss inside the triac, not the power to the AC load device.  From the datasheet the peak on-state voltage drop, VTM, is the voltage across the device while it is on-state. It is specified at the peak current corresponding to the IT(RMS) current of the device. This voltage to determine the power dissipated by the triac.
+
+So for these triac devices,
+
+* VTM = 1.55 V
+
+So then, if we want to keep power dissipation down to 2 W, the max current we can pass is about 1.3 A. Or about 150 watts.
+
 Another [data sheet](https://www.farnell.com/datasheets/1760767.pdf) sais "Please note that the actual thermal resistance will be reduced by other, non-dissipating components in close proximity to the triac, while it will be increased by any components that dissipate power in the presence of the triac. It is essential therefore to measure the prototype to discover the true thermal performance."
 
-So we really have to do a bit of prototyping and science here. There is something about using the Kneel voltage to determine the power dissipated by the triac (note that this is different than the power of the load). But I currently do not know how to calculate the kneel voltage on my device. The datasheet seems to have a lot of stuff I do not understand yet.
+So I need to apply some test loads to the device and see how hot it gets and how fast.  I will need  thermal sensor (those tools that use the infrared light to measure temperature) and a load device.  I do not have a good electrical load testing tool either. All i have is a heat gun, which has low (~5A) and hight (~9.5A) current draw.
+
 
 # Assembly
 This is definitely one of those things where it requires a lot more effort and consideration to take a project from just an idea idea to a something that is "finished" product. Or at least, something that is safe to use and actually useful.
@@ -146,7 +155,7 @@ Small improvements on the v1.0 build:
 
 * Relocated the ground terminal connection to bottom of the low voltage side. It was near the terminal block and in the way if we wanted to use [MTA-100 series](https://www.digikey.ca/products/en?FV=ffec1142) connectors for internal wiring.
 
-* Using OSHPark 2 oz copper service http://docs.oshpark.com/services/two-layer-hhdc/. It costs more, but is better suited for current capacity.
+* Using OSHPark 2 oz copper service http://docs.oshpark.com/services/two-layer-hhdc/. It is better suited for current capacity.
 
 ![plug controller board v1.1](doc/plug_controller_board_v1.1.png)
 
@@ -214,4 +223,8 @@ The only thing I do not like about this is the need to have an actual wire wired
 
 The boards OSHPark offers are 1 oz (1.4mil) FR4 boards that are 1.4mm thick http://docs.oshpark.com/services/two-layer/ These are not the best for thermal conductuctivity.   I should really have used their 2 oz product http://docs.oshpark.com/services/two-layer-hhdc/
 
-This board was designed following the footprint layout, but not doing the maths for the thermal requirements for the triacs first.
+This board was designed following the footprint layout, but not doing the maths for the thermal requirements for the triacs first. After crunching the numbers these devices in their configuration are good for up to about 2W of power dissipation. Which is 150 watts of load per device. Which is of course good enough for LED desk lamps, soldering stations, glue guns, oscilliscope, usb charger bricks, TV, small computing appliances. But not so much for heat guns, spot welders. Though these are intermediate use.  Again, more testing will help us to see.
+
+To be able to get the triacs to handle more power, they need better heatsinks.
+
+Perhaps I should adjust the fuse size down to 3.5A to limit the current delivery ability of this plug.
