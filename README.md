@@ -79,11 +79,12 @@ They just didn't feel like a good fit for what I wanted to do here.
 
 Really it is more elegant to use Triac device with an opto isolator. This is the same feature and behavior as a solid state relay. Ok. fine. Just get a couple nice solid state relays. Done. Nothing to see or do here.
 
-Well. its just that a regular solid state relay is quite expensive. They usually come in a very rugged and somewhat bulky panel mount kind of package. And the dual solid state relays are even more expensive. I am not using hex bolts to torque these onto an elevator control panel here. I just want to make my desk lamp turn on. Also. I am poor and can not afford to buy these.
+Well. Its just that a regular solid state relay is [quite expensive](https://www.digikey.ca/product-detail/en/sensata-crydom/PF240D25/CC1341-ND/278899).  And the dual solid state relays are even [more expensive](https://www.digikey.ca/product-detail/en/sensata-crydom/UPD2415D-10/CC2483-ND/2177128). Although. Just having to design a PCB that makes use of these already RU certified parts. Someone has done the work to try to compute the current and thermal carrying abilities (see below). It is a compelling reason to just buy vs build. A [popular youtuber](http://www.instructables.com/id/Make-Your-Own-Solid-State-Relay/) also agrees that in this case it is really better to buy a solid state relay instead of trying to build your own. Like I am doing here. So maybe just look into finding one we can buy.
+
+Oh.. You are still reading this. Ok. Onward.
 
 I did find some other projects for an [Arduino Triac Shield](https://forum.arduino.cc/index.php?topic=24335.0). But that looks horribly dangerous again with the high voltage there mixed up and exposed with the low voltage stuff. And again with the too large to fit into a metal plug box.
 There was a later version with the separate board, but again this only has 1 triac.
-
 
 I took a few minutes to read up on what kinds of Triacs are out there, and found I like these [STMicroelectronics Snubberless series Triacs](http://www.st.com/content/ccc/resource/technical/document/application_note/ca/ef/9d/1e/4a/9f/47/69/CD00003865.pdf/files/CD00003865.pdf/jcr:content/translations/en.CD00003865.pdf).
 

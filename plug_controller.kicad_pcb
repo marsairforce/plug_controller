@@ -3,7 +3,7 @@
   (general
     (links 36)
     (no_connects 0)
-    (area 158.774001 72.611 224.865001 121.127143)
+    (area 158.774001 72.611 224.865001 123.209)
     (thickness 1.6)
     (drawings 23)
     (tracks 92)
@@ -139,12 +139,13 @@
 
   (net_class AC ""
     (clearance 1.22)
-    (trace_width 3.69)
+    (trace_width 4)
     (via_dia 1.22)
     (via_drill 0.85)
     (uvia_dia 0.3)
     (uvia_drill 0.1)
     (add_net "Net-(D1-Pad1)")
+    (add_net "Net-(D1-Pad2)")
     (add_net "Net-(D2-Pad1)")
     (add_net "Net-(F1-Pad1)")
   )
@@ -156,7 +157,6 @@
     (via_drill 0.5)
     (uvia_dia 0.3)
     (uvia_drill 0.1)
-    (add_net "Net-(D1-Pad2)")
     (add_net "Net-(D1-Pad3)")
     (add_net "Net-(D2-Pad3)")
     (add_net "Net-(R5-Pad2)")
