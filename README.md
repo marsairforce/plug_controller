@@ -1,7 +1,17 @@
 # A double solid state relay for North America duplex mains switching
 
 I wanted to have an extension cord, with power distribution (many outlets), so like a power bar. On my desk. That I could conveniently switch on in an arbitrary way.
+
+Here it is assembled in all of its glory
+
 ![plug_controller_v1_assembled](doc/plug_controller_v1_assembled.png)
+
+The rest of this page explains the thought process that got to this point.
+
+Schematic and board layout were done using Kicad.
+
+# License
+[Creative Commons - Attribution - ShareAlike 3.0](LICENSE.md)
 
 # WARNING
 
@@ -10,6 +20,7 @@ Disclimer. Danger. Working with mains AC power is dangerous. You can die. Your k
 You have to know how to be safe. Never connect live AC mains to something without having all the conductors insulated. Always test AC switching things using a low voltage AC source, such as a transformer, before trying to plug your stuff in for the first time.  There are a lot of good articles and discussion on the Internet. Read up. Know what you need to do to be safe
 
 Doing anything I do here is something you are doing at your own risk. I am actively telling you to not do anything I am doing here.
+
 
 
 # Background
@@ -49,7 +60,10 @@ We have a connector there for AC ground to be also our ground.
 
 This is actually two swiches. The idea being that in a standard duplex plug there are two halves (top and bottom). So that we can provide individual switching to each half. Which will allow us to plug two lights into a single duplex plug.
 
+The inputs to the opto isolator is a constant current source provided by the two NPN transistors. Q1 is activated when there is enough current flowing through R3 to provide a voltage drop of the about 0.6V to cause Q1 to turn on, which works to turn off Q3. This allows us to have a wide range of input voltage (2 to aobut 30V) but without having to worry about using a current limiting resistor that will just dissipate the extra voltage as heat.  I like the idea of my electrical things not getting too hot of course. Probably it will be just used for 3.3V to 5V from a microcontroller.
+
 The board can be laid out small enough to fit inside a metal duplex outlet style box. So that we can provide control wires into the box.
+
 I was invisioning an extension cord with the metal plug box on the end with this controller board inside the metal box.
 
 ![plug controller board](doc/plug_controller_board.png)
@@ -93,7 +107,7 @@ The only wires inside this box are the 14 gauge AC wires.
 
 The low voltage side of things was designed to be on the neutral side of the plug. The hot side of the plug being on the side where the wire and terminal connectors are.
 
-The board is mounted inside the metal plug box by drilling some holes into the metal box. And using 1/4 inch hex aluminum stand offs.
+The board is mounted inside the metal plug box by drilling some holes into the metal box. And using 1/4 inch hex aluminum stand offs. I think I placed the holes far enough away from the AC points on the circuit board to be OK. though I covered the solder side (the side that is facing down towards the metal box) with some electrical tape just in case.  I use nylon screws into the metal standoffs so its less metal surface on the top of the circuit board. They seem to be able to get a good snug fit and have that feeling they won't come loose on their own.
 
 Here I do not have a physical baffle between the low voltage and high voltage side. Though the precautions I took above are likely ok for my use for now.
 
@@ -102,6 +116,8 @@ The only thing I do not like about this is the need to have an actual wire wired
 # Next steps
 
 * I would like some feedback for how this is constructed. Is there anything I can do better?
+
+* Create a board with the updates and feedback.
 
 * I would like to get my circuit board CSA approved, or UL certified. So then it could be used in like my office without causing anyone undue concern.
 
