@@ -66,7 +66,7 @@ Well, this is not quite there yet. I thought I would start with building just th
 I really did not consider using mechanical relays because of their bulky size. I wanted something that could fit into a regular metal plug box.  There are a lot of [relay modules](https://www.cytron.io/p-bb-relay-5v-02), [shields](https://www.seeedstudio.com/Relay-shield-V2.0-p-1376.html).
 
 Though this feels somewhat incomplete.
-* There is no fuze.
+* There is no fuse.
 * The low voltage connections is just breadboard jumper style header pins. Not a very robust connector.
 * It needs 5V, but I want to use 3.3v.
 * You need to drive an active low signal to control the relay.
@@ -140,7 +140,7 @@ Small improvements on the v1.0 build:
 
 * The connection of the opto triac to the A1 and G pins of the T25 was wrong. Updated footprint, schematic, and new board layout to fix this.
 
-* The fuze holder footprint was differnt from the fuze holder clips I had ordered. The same family. Just curiously rotated 90°. I worked around it by ordering some more fuze holder clips. But really this was another footprint selection bug. Now using the footprint for the fuze holders I have.  The ones that are in use now are slightly lower profile, so the fuse is held closer to the board, leaving the slightly more room in the box for the plug.
+* The fuse holder footprint was differnt from the fuse holder clips I had ordered. The same family. Just curiously rotated 90°. I worked around it by ordering some more fuse holder clips. But really this was another footprint selection bug. Now using the footprint for the fuse holders I have.  The ones that are in use now are slightly lower profile, so the fuse is held closer to the board, leaving the slightly more room in the box for the plug.
 
 * The resistor from opto triac could be larger. Reading the datasheet, using 300 ohm is well within the current capabilities of both the MOC3063M and the T25. But It is perhaps more current than is required.  When patching the V1.0 board with a thru hole resistor I found we can use up to about 1K total resistance.
 
