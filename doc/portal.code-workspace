@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": "/Users/travis/workspace/cloud"
+		},
+		{
+			"path": "/Users/travis/workspace/stack"
+		},
+		{
+			"path": "/Users/travis/Documents/hex_display"
+		},
+		{
+			"path": "/Users/travis/.m2"
+		},
+		{
+			"path": "/Users/travis/workspace/portal-ocp-role-migration"
+		},
+		{
+			"path": "/Users/travis/Documents/led-breadboard-module"
+		},
+		{
+			"path": "/Users/travis/Documents/plug_controller"
+		},
+		{
+			"path": "/Users/travis/Documents/robot-jardin"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"java.configuration.updateBuildConfiguration": "disabled"
+	}
+}
