@@ -1,4 +1,4 @@
-# A double solid state relay for North America duplex mains switching
+# A  solid state relay for duplex plug mains switching
 
 I wanted to have an extension cord, with power distribution (many outlets), so like a power bar. On my desk. That I could conveniently switch on in an arbitrary way.
 
