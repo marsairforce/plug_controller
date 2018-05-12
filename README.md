@@ -103,16 +103,7 @@ Their [thermal management for handling and mounting](http://www.st.com/content/c
 
 ![T25 thermal considerations](doc/T25_thermal_considerations.png)
 
-The data sheet recommends only currents up to 8A for a good FR4 board design. Since I don't have the filled copper thru holes, I would say the actual current I can safely support is less. This is why I have fuse rated for 10A, allowing about 5A each triac circuit. Having to also consider there are two triacs near each other. So this will influence their heat dissipation abilities as well.
-
-The recommended approach for surface mount components is to use Insulated Metallic Substrate (IMS). IMS offers enhanced thermal characteristics as is a substrate consisting of three different layers:
-* base material which is available as an aluminum or a copper plate
-* thermal conductive dielectric layer
-* copper foil, which can be etched as a circuit layer.
-
-This is not something I have access to though.
-
-So it is becoming clear to me now why actual solid state relays are so large. They are mostly heat sinks and electrical isolation.
+The data sheet recommends only currents up to 8A for a good FR4 board design. Since I don't have the filled copper thru holes, I would say the actual current I can safely support with my board is  going to be much less.
 
 Trying to think about this, for room temperature use
 
@@ -134,10 +125,22 @@ So for these triac devices,
 
 So then, if we want to keep power dissipation down to 2 W, the max current we can pass is about 1.3 A. Or about 150 watts.
 
+The recommended approach for surface mount components is to use Insulated Metallic Substrate (IMS). IMS offers enhanced thermal characteristics as is a substrate consisting of three different layers:
+* base material which is available as an aluminum or a copper plate
+* thermal conductive dielectric layer
+* copper foil, which can be etched as a circuit layer.
+
+Using an IMS board should reduce the Rth(j-a) from 50 °C/W to 8 °C/W.  Which should then allow the triac to dissipate 13 W of power, or about 8 A
+
+This is not something I have access to at OSHPark. This other place [Twisted Traces](https://www.twistedtraces.com/products/prototype-panel/ims-insulated-metal-substrate-pcb) appears to support IMS boards. We have to order a single panel, that goes for $320 USD, which for this board size will be about 26 boards or cost to about $12 per board. But this will allow us to handle up towards 900 W loads.
+
+So it is becoming clear to me now why actual solid state relays are so large. They are mostly heat sinks and electrical isolation.
+
 Another [data sheet](https://www.farnell.com/datasheets/1760767.pdf) sais "Please note that the actual thermal resistance will be reduced by other, non-dissipating components in close proximity to the triac, while it will be increased by any components that dissipate power in the presence of the triac. It is essential therefore to measure the prototype to discover the true thermal performance."
 
-So I need to apply some test loads to the device and see how hot it gets and how fast.  I will need  thermal sensor (those tools that use the infrared light to measure temperature) and a load device.  I do not have a good electrical load testing tool either. All i have is a heat gun, which has low (~5A) and hight (~9.5A) current draw.
+Having to also consider there are two triacs near each other. So this will influence their heat dissipation abilities right.
 
+So I need to apply some test loads to the device and see how hot it gets and how fast.  I will need  thermal sensor (those tools that use the infrared light to measure temperature) and a load device.  I do not have a good electrical load testing tool either. All i have is a heat gun, which has low (~5A) and hight (~9.5A) current draw.
 
 # Assembly
 This is definitely one of those things where it requires a lot more effort and consideration to take a project from just an idea idea to a something that is "finished" product. Or at least, something that is safe to use and actually useful.
@@ -160,7 +163,6 @@ Small improvements on the v1.0 build:
 ![plug controller board v1.1](doc/plug_controller_board_v1.1.png)
 
 # V1.0
-
 
 So with the idea in mind and much reading of the datasheets and internet posts, set off to design. The triac application note demonstrates how they could be used as a solid state state relay, by fronting them ith an opto isolator with zero crossing detection and triac output.
 
@@ -227,4 +229,5 @@ This board was designed following the footprint layout, but not doing the maths 
 
 To be able to get the triacs to handle more power, they need better heatsinks.
 
-Perhaps I should adjust the fuse size down to 3.5A to limit the current delivery ability of this plug.
+There are these little [clip on heatsinks](https://www.digikey.ca/product-detail/en/wakefield-vette/217-36CTE6/345-1099-ND/1033769) for these TO-263 package. Maybe should see how these help too.
+ They have a thermal resistance of 55.00 °C/W . So this will improve the heat dissipation abilities of the triac, allowing it to handle more power. But how much more?  Stupid maths and formulas.Not sure how to work this.  Maybe I'll just try them. But need to borrow a temperature sensor first.
