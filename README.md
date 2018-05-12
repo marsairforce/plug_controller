@@ -17,9 +17,17 @@ Schematic and board layout were done using Kicad.
 
 Disclimer. Danger. Working with mains AC power is dangerous. You can die. Your kids can die. Your pets can die. You can burn down your house. You can cause your neighbor's house to burn down when your house is burning down.
 
-You have to know how to be safe. Never connect live AC mains to something without having all the conductors insulated. Always test AC switching things using a low voltage AC source, such as a transformer, before trying to plug your stuff in for the first time.  There are a lot of good articles and discussion on the Internet. Read up. Know what you need to do to be safe
+You have to know how to be safe.
+* Never connect live AC mains to something without having all the conductors insulated.
+* Be aware of the current carrying capacity of the components and wires you are using. Things fail badly when there is high voltages involved and you exceed the rated voltages. e.g. capacitors explode.
+* Be aware of the thermal considerations of the compon you are using. Things that pass current will dissipate heat as they are in operation. When things get too hot, they burn. when they burn they cause other things to burn too.
+* Always test AC switching things using a low voltage AC source, such as a transformer, or an isolation transformer where the current can be controlled before trying to plug your stuff in for the first time. short circuits can cause unexpected current or loading and this can cause things to explode or you can get a nasty shock, including, but not limited to death.
 
-Doing anything I do here is something you are doing at your own risk. I am actively telling you to not do anything I am doing here.
+There are a lot of good articles and discussion on the Internet. Read up. Know what you need to do to be safe
+
+Doing anything I do here is something you are doing at your own risk.
+
+I am actively telling you to not do anything I am doing here.
 
 
 
@@ -42,17 +50,110 @@ Of course it is awesome to build something that is "internet of things". Make a 
 Well, this is not quite there yet. I thought I would start with building just the switching part of things. Which technically is just a solid state relay. And to use regular wires to control it. Then then I can work on building integrations or wireless signalling, or apps, or even just a panel with legacy push buttons.
 
 
-# Theory
+# Next steps
 
-I really did not consider using mechanical relays because of their bulky size. I wanted something that could fit into a regular metal plug box.  There are a lot of relay modules, shields, IO boards. Some have nice opto isolators even. These all feel somewhat poor quality. Or on their own, incomplete. Such as the circuit board does not have holes for mounting it. Or there is no fuze. Or you need to give them 12V. Or you need to drive an active low signal to control the relay. They just didn't feel like a good fit for what I wanted.
+* I would like some feedback for how this is constructed. Is there anything I can do better?
+
+* Measure the performance. How hot does the triac get under what AC load.
+
+* Create a board with the updates and feedback.
+
+* I would like to get my circuit board CSA approved, or UL certified. So then it could be used in like my office without causing anyone undue concern.
+
+* Design a 3.3v power supply, or use an existing module thta does this, so I can stuff small wireless or bluetooth micro controller into the plug. maybe a separate circuit board for this. Though I kind of like the idea of "just a plug control", it would be more practical in a general use to have these around a house and not just on my workbench.
+
+# Theory
+I really did not consider using mechanical relays because of their bulky size. I wanted something that could fit into a regular metal plug box.  There are a lot of [relay modules](https://www.cytron.io/p-bb-relay-5v-02), [shields](https://www.seeedstudio.com/Relay-shield-V2.0-p-1376.html).
+
+Though this feels somewhat incomplete.
+* There is no fuze.
+* The low voltage connections is just breadboard jumper style header pins. Not a very robust connector.
+* It needs 5V, but I want to use 3.3v.
+* You need to drive an active low signal to control the relay.
+* The Arduino shield is down right dangerous for 120V use, being directly on top of the Arduino like that.
+* Physically these are too large to fit inside a regular metal plug box.
+
+I am sure these are good for some things, lower voltage switching like for a HVAC thermostat. Or applictions where you really want a normally closed feature. Or for setting up some experiements to demonstrate or learn like for a lab or classroom setup.
+
+They just didn't feel like a good fit for what I wanted to do here.
 
 Really it is more elegant to use Triac device with an opto isolator. This is the same feature and behavior as a solid state relay. Ok. fine. Just get a couple nice solid state relays. Done. Nothing to see or do here.
-Well. its just that a regular solid state relay is quite expensive. They usually come in a very rugged and somewhat bulky panel mount kind of package. I am not using hex bolts to torque these onto an elevator control panel here. I just want to make my desk lamp turn on. Also. I am poor and can not afford to buy these.
+
+Well. its just that a regular solid state relay is quite expensive. They usually come in a very rugged and somewhat bulky panel mount kind of package. And the dual solid state relays are even more expensive. I am not using hex bolts to torque these onto an elevator control panel here. I just want to make my desk lamp turn on. Also. I am poor and can not afford to buy these.
+
+I did find some other projects for an [Arduino Triac Shield](https://forum.arduino.cc/index.php?topic=24335.0). But that looks horribly dangerous again with the high voltage there mixed up and exposed with the low voltage stuff. And again with the too large to fit into a metal plug box.
+There was a later version with the separate board, but again this only has 1 triac.
+
 
 I took a few minutes to read up on what kinds of Triacs are out there, and found I like these [STMicroelectronics Snubberless series Triacs](http://www.st.com/content/ccc/resource/technical/document/application_note/ca/ef/9d/1e/4a/9f/47/69/CD00003865.pdf/files/CD00003865.pdf/jcr:content/translations/en.CD00003865.pdf).
-On their own they offer us a lot of features.  And this application note demonstrates how they could be used to create a solid state relay, by fronting them ith an opto isolator with zero crossing detection and triac output.
 
-So then,
+* These devices are readily available on [Digikey](https://www.digikey.ca/product-detail/en/stmicroelectronics/T2535-800G-TR/497-10581-1-ND/2294945
+)
+* They are rated for 25A. With peak surge of 260A for 16 ms (e.g. inrush current)
+* Rated for repetitive peak off-state voltage of 800V.
+
+
+So this should be safe for how we plan to use it.  The next thing to consider is how hot this will get when operating.
+
+* Tj = 125 °C (Operating junction temperature)
+* Rth(j-c) is 0.8 °C/W
+* Rth(j-a) is 45°C/W.
+
+Their [thermal management for handling and mounting](http://www.st.com/content/ccc/resource/technical/document/application_note/42/4a/77/9a/f5/58/43/77/CD00004000.pdf/files/CD00004000.pdf/jcr:content/translations/en.CD00004000.pdf) document recommends for the D2PAK packaging using a FR4 board with copper heat spreader area, and filled copper thru holes, or an additional heatsink.
+
+![T25 thermal considerations](doc/T25_thermal_considerations.png)
+
+The data sheet recommends only currents up to 8A for a good FR4 board design. Since I don't have the filled copper thru holes, I would say the actual current I can safely support is less. This is why I have fuse rated for 10A, allowing about 5A each triac circuit. Having to also consider there are two triacs near each other. So this will influence their heat dissipation abilities as well.
+
+The recommended approach for surface mount components is to use Insulated Metallic Substrate (IMS). IMS offers enhanced thermal characteristics as is a substrate consisting of three different layers:
+* base material which is available as an aluminum or a copper plate
+* thermal conductive dielectric layer
+* copper foil, which can be etched as a circuit layer.
+
+This is not something I have access to though.
+
+So it is becoming clear to me now why actual solid state relays are so large. They are mostly heat sinks and electrical isolation.
+
+Trying to think about this, for room temperature use
+
+* Ta = 20 °C
+* Tj = 125 °C
+* Rth(j-a) = 50 °C/W
+
+With the junction temperature modelled as `Tj = Ta + (P * Rth(j-a))`
+
+Then `P = (Tj - Ta) / Rth(j-a)`
+
+Or, with no heat sink, P = 2.1W . That feels wrong to me. But then further [reading](http://www.farnell.com/datasheets/1760777.pdf), yes it is regular to expect 2W heat dissipation for surface mount triacs.
+
+Another [data sheet](https://www.farnell.com/datasheets/1760767.pdf) sais "Please note that the actual thermal resistance will be reduced by other, non-dissipating components in close proximity to the triac, while it will be increased by any components that dissipate power in the presence of the triac. It is essential therefore to measure the prototype to discover the true thermal performance."
+
+So we really have to do a bit of prototyping and science here. There is something about using the Kneel voltage to determine the power dissipated by the triac (note that this is different than the power of the load). But I currently do not know how to calculate the kneel voltage on my device. The datasheet seems to have a lot of stuff I do not understand yet.
+
+# Assembly
+This is definitely one of those things where it requires a lot more effort and consideration to take a project from just an idea idea to a something that is "finished" product. Or at least, something that is safe to use and actually useful.
+
+This is the kind of stuff I didn't get to learn in school. Maybe I didn't take the right courses. But in any case some stuff was not obvious to me until I tried it. In some cases I did not even know what I needed to do. It took me a few tries to get it right. Sometimes there were failures. I figured I would chronicle the revisions here, as some of the things that came up were not obvious to me. So they might be a good learning tool for others.
+
+# V1.1
+Small improvements on the v1.0 build:
+
+* The connection of the opto triac to the A1 and G pins of the T25 was wrong. Updated footprint, schematic, and new board layout to fix this.
+
+* The fuze holder footprint was differnt from the fuze holder clips I had ordered. The same family. Just curiously rotated 90°. I worked around it by ordering some more fuze holder clips. But really this was another footprint selection bug. Now using the footprint for the fuze holders I have.  The ones that are in use now are slightly lower profile, so the fuse is held closer to the board, leaving the slightly more room in the box for the plug.
+
+* The resistor from opto triac could be larger. Reading the datasheet, using 300 ohm is well within the current capabilities of both the MOC3063M and the T25. But It is perhaps more current than is required.  When patching the V1.0 board with a thru hole resistor I found we can use up to about 1K total resistance.
+
+* Relocated the ground terminal connection to bottom of the low voltage side. It was near the terminal block and in the way if we wanted to use [MTA-100 series](https://www.digikey.ca/products/en?FV=ffec1142) connectors for internal wiring.
+
+* Using OSHPark 2 oz copper service http://docs.oshpark.com/services/two-layer-hhdc/. It costs more, but is better suited for current capacity.
+
+![plug controller board v1.1](doc/plug_controller_board_v1.1.png)
+
+# V1.0
+
+
+So with the idea in mind and much reading of the datasheets and internet posts, set off to design. The triac application note demonstrates how they could be used as a solid state state relay, by fronting them ith an opto isolator with zero crossing detection and triac output.
 
 ![plug controller schematic](doc/plug_controller_schematic.png)
 
@@ -66,13 +167,11 @@ The board can be laid out small enough to fit inside a metal duplex outlet style
 
 I was invisioning an extension cord with the metal plug box on the end with this controller board inside the metal box.
 
-![plug controller board](doc/plug_controller_board.png)
+![plug controller board v1.0](doc/plug_controller_board_v1.0.png)
+
 This keeps all of the 120V AC inside the extension cord and outlet box. We do not need to have 120V wires going out of the box to our circuit board. Which is a good thing here, since we are working with both water and electricity.
 
 So to use this we will just need 2 digital IO pins from the Pi.
-
-# Assembly
-This is definitely one of those things where it requires more effort and consideration to take a project idea from a schematic or concept to a finished product.
 
 In this case, It was challenging for me to breadboard this, because the pieces are all surface mount. And I have reservations about using 120V AC on a solderless breadboard. I would never do this.
 
@@ -113,12 +212,6 @@ Here I do not have a physical baffle between the low voltage and high voltage si
 
 The only thing I do not like about this is the need to have an actual wire wired up to the box. I would prefer to have some kind of connector. I was thinking RJ-11 because this control cable is old flat phone wire I had on hand.
 
-# Next steps
+The boards OSHPark offers are 1 oz (1.4mil) FR4 boards that are 1.4mm thick http://docs.oshpark.com/services/two-layer/ These are not the best for thermal conductuctivity.   I should really have used their 2 oz product http://docs.oshpark.com/services/two-layer-hhdc/
 
-* I would like some feedback for how this is constructed. Is there anything I can do better?
-
-* Create a board with the updates and feedback.
-
-* I would like to get my circuit board CSA approved, or UL certified. So then it could be used in like my office without causing anyone undue concern.
-
-* Design a 3.3v power supply, or use an existing module thta does this, so I can stuff small wireless or bluetooth micro controller into the plug. maybe a separate circuit board for this. Though I kind of like the idea of "just a plug control", it would be more practical in a general use to have these around a house and not just on my workbench.
+This board was designed following the footprint layout, but not doing the maths for the thermal requirements for the triacs first.
