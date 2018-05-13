@@ -183,11 +183,9 @@ I was invisioning an extension cord with the metal plug box on the end with this
 
 This keeps all of the 120V AC inside the extension cord and outlet box. We do not need to have 120V wires going out of the box to our circuit board. Which is a good thing here, since we are working with both water and electricity.
 
-So to use this we will just need 2 digital IO pins from the Pi.
+So to use this we will just need 2 digital IO pins from the micro controller.
 
-In this case, It was challenging for me to breadboard this, because the pieces are all surface mount. And I have reservations about using 120V AC on a solderless breadboard. I would never do this.
-
-Instead I had some circuit boards built using OSHPark and then assembled some the pieces.
+In this case, It was challenging for me to breadboard this, because the pieces are all surface mount. And I have reservations about using 120V AC on a solderless breadboard. Instead I had some circuit boards built using OSHPark and then assembled the pieces.
 
 This first version I managed to mix up the A1 and A2 pin outs for the triac
 ![T25_triac.jpg](doc/T25_triac.jpg)
@@ -208,27 +206,24 @@ With the board ready to go and, its time to assemble into the metal plug box.
 ![plug controller assembly](doc/plug_controller_assembly.jpg)
 
 
-The plug itself has that metal bridge bar between the top and bottom outlets cut. So that they may be powered individuall.
+The plug itself has that metal bridge bar between the top and bottom outlets cut so that we can power each top and bottom half individually.
 
-I use the nice crimp and spade connectors, as according to electrical code, we can't be soldering these wires, the risk of mechanical separation and high resistance of the solder joint causing a fire. I didn't have to, but also used fork terminals on the wires for the screw to the plug. Just makes for a nicer wiring job, and now there are no possibility of stray wires coming out from under the screw terminals.
+I used these nice crimp and spade connectors as according to electrical code we can't be soldering these wires. This is probably the risk of mechanical separation and causing high resistance of the solder joint causing a fire. I didn't have to, but also used fork terminals on the wires for the screw to the plug, it just makes for a nicer wiring job, and now there are no possibility of stray wires coming out from under the screw terminals.
 
-According to electrical code, low voltage wires can not exist within the same box, conduict, or package as high voltage wires. With the exception if you are making an all in one powered plug in wireless access point.
-
-The only wires inside this box are the 14 gauge AC wires.
+According to electrical code, low voltage wires can not exist within the same box, conduict, or package as high voltage wires. With the exception if you are making an all in one powered plug in wireless access point. So for now that is why I have that hole in the box, the screw terminals to the low voltage wires hook up out of that hole. So then the only wires inside this box are the 14 gauge 12V AC wires.
 
 The low voltage side of things was designed to be on the neutral side of the plug. The hot side of the plug being on the side where the wire and terminal connectors are.
 
-The board is mounted inside the metal plug box by drilling some holes into the metal box. And using 1/4 inch hex aluminum stand offs. I think I placed the holes far enough away from the AC points on the circuit board to be OK. though I covered the solder side (the side that is facing down towards the metal box) with some electrical tape just in case.  I use nylon screws into the metal standoffs so its less metal surface on the top of the circuit board. They seem to be able to get a good snug fit and have that feeling they won't come loose on their own.
+The board is mounted inside the metal plug box by drilling some holes into the metal box. And using 1/4 inch hex aluminum stand offs. I think I placed the holes far enough away from the AC points on the circuit board to be OK. Though I covered the solder side (the side that is facing down towards the metal box) with some electrical tape just in case.  I use nylon screws into the metal standoffs so its less metal surface on the top of the circuit board. They seem to be able to get a good snug fit and have that feeling they won't come loose on their own.
 
 Here I do not have a physical baffle between the low voltage and high voltage side. Though the precautions I took above are likely ok for my use for now.
 
 The only thing I do not like about this is the need to have an actual wire wired up to the box. I would prefer to have some kind of connector. I was thinking RJ-11 because this control cable is old flat phone wire I had on hand.
 
-The boards OSHPark offers are 1 oz (1.4mil) FR4 boards that are 1.4mm thick http://docs.oshpark.com/services/two-layer/ These are not the best for thermal conductuctivity.   I should really have used their 2 oz product http://docs.oshpark.com/services/two-layer-hhdc/
+The boards OSHPark offers are 1 oz (1.4mil) FR4 boards that are 1.4mm thick http://docs.oshpark.com/services/two-layer/ These are not the best for thermal conductuctivity.   I should really have used their 2 oz copper product http://docs.oshpark.com/services/two-layer-hhdc/
 
 This board was designed following the footprint layout, but not doing the maths for the thermal requirements for the triacs first. After crunching the numbers these devices in their configuration are good for up to about 2W of power dissipation. Which is 150 watts of load per device. Which is of course good enough for LED desk lamps, soldering stations, glue guns, oscilliscope, usb charger bricks, TV, small computing appliances. But not so much for heat guns, spot welders. Though these are intermediate use.  Again, more testing will help us to see.
 
-To be able to get the triacs to handle more power, they need better heatsinks.
+To be able to get the triacs to handle more power, they need better heatsinks. I could have put more copper on the other side of the board and used via stitching to help transfer the heat. The downside of this of course is there is more electrically live surface area we have to be aware of. Though the solder mask does offer some protective coating.
 
-There are these little [clip on heatsinks](https://www.digikey.ca/product-detail/en/wakefield-vette/217-36CTE6/345-1099-ND/1033769) for these TO-263 package. Maybe should see how these help too.
- They have a thermal resistance of 55.00 °C/W . So this will improve the heat dissipation abilities of the triac, allowing it to handle more power. But how much more?  Stupid maths and formulas.Not sure how to work this.  Maybe I'll just try them. But need to borrow a temperature sensor first.
+There are these little [clip on heatsinks](https://www.digikey.ca/product-detail/en/wakefield-vette/217-36CTE6/345-1099-ND/1033769) for these TO-263 package. Maybe should see how these help too. They have a thermal resistance of 55.00 °C/W . So this will improve the heat dissipation abilities of the triac, allowing it to handle more power. But how much more?  Stupid maths and formulas.Not sure how to work this.  Maybe I'll just try them. But need to borrow a temperature sensor first.
